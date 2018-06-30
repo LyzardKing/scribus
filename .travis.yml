@@ -37,6 +37,7 @@ before_install:
     fi
 # OSX
 # - if [ $TRAVIS_OS_NAME == osx ]; then brew --env && brew config && brew list; fi
+# Add link to hunspell lib to enable plugin build
 - if [ $TRAVIS_OS_NAME == osx ]; then brew update; 
       brew outdated cmake --verbose || brew upgrade cmake; 
       brew tap homebrew/dupes && brew install homebrew/dupes/zlib && brew link --force zlib;
@@ -49,7 +50,8 @@ before_install:
       brew outdated pkg-config --verbose || brew upgrade pkg-config; 
       brew outdated boost || brew upgrade boost; 
       brew outdated freetype || brew upgrade freetype; 
-      brew install librevenge libwpg libvisio libmspub libcdr libpagemaker libfreehand open-scene-graph; 
+      brew install librevenge libwpg libvisio libmspub libcdr libpagemaker libfreehand open-scene-graph;
+      ln -s /usr/local/Cellar/hunspell/1.6.2/lib/libhunspell-1.6.0.dylib /usr/local/Cellar/hunspell/1.6.2/lib/libhunspell.dylib;
     fi
   # - export LDFLAGS+=-L/usr/local/opt/zlib/lib:-L/usr/local/opt/gettext/lib:-L/usr/local/opt/libffi/lib:-L/usr/local/opt/qt5/lib:-L/usr/local/opt/sqlite/lib:-L/usr/local/opt/openssl/lib:-L/usr/local/opt/icu4c/lib
   # - export CXXFLAGS+=-I/usr/local/opt/zlib/include:-I/usr/local/opt/gettext/include:-I/usr/local/opt/qt5/include:-I/usr/local/opt/sqlite/include:-I/usr/local/opt/openssl/include:-I/usr/local/opt/icu4c/include 
@@ -74,13 +76,13 @@ script:
       make install;
     fi
 
-notifications:
-  irc:
-    channels:
-    -  "chat.freenode.net#scribus"
-    -  "chat.freenode.net#scribus-dev"
-    template:
-    - "%{repository}/%{branch} (%{author}): %{build_url}: %{message}"
-    on_success: always
-    on_failure: always
+#notifications:
+#  irc:
+#    channels:
+#    -  "chat.freenode.net#scribus"
+#    -  "chat.freenode.net#scribus-dev"
+#    template:
+#    - "%{repository}/%{branch} (%{author}): %{build_url}: %{message}"
+#    on_success: always
+#    on_failure: always
 
